@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/template/header/header.component';
 
 import { FooterComponent } from './components/template/footer/footer.component';
-import { ItemsCrudComponent } from './components/form/items-crud/items-crud.component';
+import { ItemsCrudComponent } from './components/items/items-crud/items-crud.component';
 import { HomeComponent } from './views/home/home.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
