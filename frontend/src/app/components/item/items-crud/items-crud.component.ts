@@ -1,5 +1,5 @@
-import { ItemService } from './../item.service';
 import { Component, OnInit } from '@angular/core';
+import { ItemService } from './../item.service';
 import { Item } from '../item';
 
 @Component({
@@ -9,16 +9,21 @@ import { Item } from '../item';
 })
 export class ItemsCrudComponent implements OnInit {
 
-  private item: Item = {
-    id: 4,
-    name: "Novo Item"
+  public item: Item = {
+    id: null,
+    name: ""
   }
+
+  public items: Item[];
 
   constructor(private itemService: ItemService) { 
 
   }
 
   ngOnInit(): void {
+    this.itemService.getAll().subscribe(items => {
+      this.items = items;
+    });
   }
 
 

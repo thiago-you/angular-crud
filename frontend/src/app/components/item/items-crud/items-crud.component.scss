@@ -3,5 +3,44 @@
     
     .card {
         display: flex;
+        flex-direction: column;
+
+        .card-body {
+            min-height: 400px;
+            padding: 1rem;
+        }
+
+        .card-bottom {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 1px solid #cecece;
+            padding: 1rem;
+
+            & > div {
+                display: flex;
+                justify-content: space-evenly;
+                margin-top: 2rem;
+
+                form {
+                    .mat-form-field {
+                        margin: 0 2rem;
+                    }
+                    
+                    mat-form-field.mat-form-field:first-child {
+                        width: 70px;
+                    }
+                    
+                    mat-form-field.mat-form-field:last-child {
+                        width: 400px;
+                    }
+                }
+
+                button {
+                    width: 200px;
+                }
+            }
+        }
     }
 }
