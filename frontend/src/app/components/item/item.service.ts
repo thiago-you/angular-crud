@@ -30,4 +30,16 @@ export class ItemService {
   getAll(): Observable<Item[]> {
     return this.httpClient.get<Item[]>(this.baseUrl);
   }
+
+  get(id: Number): Observable<Item> {
+    return this.httpClient.get<Item>(`${this.baseUrl}/${id}`);
+  }
+  
+  update(item: Item): Observable<Item> {
+    return this.httpClient.put<Item>(`${this.baseUrl}/${item.id}`, item);
+  }
+  
+  delete(id: Number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }
