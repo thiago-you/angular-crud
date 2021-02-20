@@ -3,8 +3,18 @@
     bottom: 0;
     background-color: #393939;
     color: #fff;
+ 
+    div.content {
+        display: flex;
+        align-items: center;
 
-    span {
-        font-size: 0.9rem;
+        span, i {
+            font-size: 0.9rem;
+        }
+
+        i {
+            color: #f04b5c;
+            padding: 0 0.3rem;
+        }
     }
 }
