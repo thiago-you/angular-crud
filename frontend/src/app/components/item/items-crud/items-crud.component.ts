@@ -14,7 +14,9 @@ export class ItemsCrudComponent implements OnInit {
     name: ""
   }
 
+  public dataSource: Item[];
   public items: Item[];
+
   public displayedColumns = ['id', 'name', 'action'];
 
   public formTitle: string = 'Novo Item';
@@ -31,7 +33,8 @@ export class ItemsCrudComponent implements OnInit {
 
   getItems() {
     this.itemService.getAll().subscribe(items => {
-      this.items = items;
+      this.dataSource = items;
+      this.items = [...this.dataSource];
     });
   }
 
@@ -79,5 +82,15 @@ export class ItemsCrudComponent implements OnInit {
     this.action = 'create';
     this.formTitle = 'Novo Item';
     this.formButtonLabel = 'Cadastrar';
+  }
+
+  filterList(value: string) {
+    if (value.trim().length > 0) {
+      this.items = this.dataSource.filter(item => {  
+        return (item.name || '').toLocaleLowerCase().includes(value.trim().toLocaleLowerCase());
+      });
+    } else {
+      this.items = [...this.dataSource];
+    }
   }
 }

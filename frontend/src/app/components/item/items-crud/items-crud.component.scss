@@ -1,16 +1,22 @@
 :host {
     width: 100%;
+
+    .table-container {
+        margin-top: 10px;
+        max-height: 300px;
+        overflow: auto;
+        
+        table {
+            width: 100%;
     
-    table {
-        width: 100%;
-
-        .text-center {
-            text-align: center;
-        }
-
-        td a {
-            margin: 0 0.5rem;
-            cursor: pointer;
+            .text-center {
+                text-align: center;
+            }
+    
+            td a {
+                margin: 0 0.5rem;
+                cursor: pointer;
+            }
         }
     }
 
@@ -18,6 +24,17 @@
         display: flex;
         flex-direction: column;
         margin-top: 2rem;
+
+        .card-header {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+
+            mat-form-field.mat-form-field {
+                width: 350px;
+            }
+        }
 
         .card-body {
             flex: 1;
