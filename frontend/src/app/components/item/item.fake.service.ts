@@ -84,7 +84,7 @@ export class ItemFakeService {
 
     let index = -1;
     this.dataSouce.forEach((_item, key) => {
-      if (_item.id = (item.id as number)) {
+      if (_item.id == (item.id as number)) {
         index = key;
       }
     });
@@ -102,7 +102,7 @@ export class ItemFakeService {
 
     let index = -1;
     this.dataSouce.forEach((item, key) => {
-      if (item.id = id) {
+      if (item.id == id) {
         index = key;
       }
     });
