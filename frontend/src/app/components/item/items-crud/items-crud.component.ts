@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from './../item.service';
 import { Item } from '../item';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ItemFakeService } from '../item.fake.service';
 
 @Component({
   selector: 'app-items-crud',
@@ -24,7 +24,7 @@ export class ItemsCrudComponent implements OnInit {
   public formButtonLabel: string = 'Cadastrar';
   public action: string = 'create';
 
-  constructor(private itemService: ItemService, private snackBar: MatSnackBar) { 
+  constructor(private itemService: ItemFakeService, private snackBar: MatSnackBar) { 
 
   }
 
@@ -33,10 +33,8 @@ export class ItemsCrudComponent implements OnInit {
   }
 
   getItems() {
-    this.itemService.getAll().subscribe(items => {
-      this.dataSource = items;
-      this.items = [...this.dataSource];
-    });
+    this.dataSource = this.itemService.getAll();
+    this.items = [...this.dataSource];
   }
 
   saveItem() {
@@ -44,38 +42,46 @@ export class ItemsCrudComponent implements OnInit {
       this.showMessage('O nome do item é obrigatório!', 'danger');
     } else {
       if (this.item.id != null && this.item.id > 0) {
-        this.itemService.update(this.item).subscribe(() => {
+        if (this.itemService.update(this.item)) {
           this.resetItem();
           this.getItems();
   
           this.showMessage('Item alterado com sucesso!');
-        });
+        } else {
+          this.showMessage('Não foi possível alterar o item!', 'danger');
+        }
       } else {
-        this.itemService.create(this.item).subscribe(() => {
+        if (this.itemService.create(this.item)) {
           this.resetItem();
           this.getItems();
   
           this.showMessage('Item cadastrado com sucesso!');
-        });
+        } else {
+          this.showMessage('Não foi possível cadastrar o item!', 'danger');
+        }
       }
     }
   }
 
-  setItemToUpdate(itemId: Number) {
-    this.itemService.get(itemId).subscribe(item => {
-      this.item = item;
+  setItemToUpdate(itemId: number) {
+    const _item = this.itemService.get(itemId);
 
+    if (_item != undefined && _item != null) {
+      this.item = _item;
+  
       this.action = 'update';
       this.formTitle = 'Alterar Item';
       this.formButtonLabel = 'Alterar';
-    });
+    }
   }
   
-  deleteItem(itemId: Number) {
-    this.itemService.delete(itemId).subscribe(() => {
+  deleteItem(itemId: number) {
+    if (this.itemService.delete(itemId)) {
       this.getItems();
       this.showMessage('Item deleetado com sucesso!');
-    });
+    } else {
+      this.showMessage('Não foi possível deletar o item!', 'danger');
+    }
   }
 
   resetItem() {
