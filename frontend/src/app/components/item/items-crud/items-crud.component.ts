@@ -41,7 +41,7 @@ export class ItemsCrudComponent implements OnInit {
 
   saveItem() {
     if (this.item.name == null || this.item.name.trim().length == 0) {
-      this.showMessage('O nome do item é obrigatório!');
+      this.showMessage('O nome do item é obrigatório!', 'danger');
     } else {
       if (this.item.id != null && this.item.id > 0) {
         this.itemService.update(this.item).subscribe(() => {
@@ -99,11 +99,18 @@ export class ItemsCrudComponent implements OnInit {
     }
   }
 
-  showMessage(msg: string): void {
+  showMessage(msg: string, type: string = 'success'): void {
+    let panelClass = 'blue-snackbar';
+    
+    if (type == 'danger' || type == 'red') {
+      panelClass = 'red-snackbar';
+    }
+
     this.snackBar.open(msg, '', {
       duration: 3000,
       horizontalPosition: 'right',
-      verticalPosition: 'top'
+      verticalPosition: 'top',
+      panelClass: [ panelClass ]
     });
   }
 }
