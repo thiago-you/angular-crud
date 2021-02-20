@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from './../item.service';
 import { Item } from '../item';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-items-crud',
@@ -23,7 +24,7 @@ export class ItemsCrudComponent implements OnInit {
   public formButtonLabel: string = 'Cadastrar';
   public action: string = 'create';
 
-  constructor(private itemService: ItemService) { 
+  constructor(private itemService: ItemService, private snackBar: MatSnackBar) { 
 
   }
 
@@ -39,20 +40,24 @@ export class ItemsCrudComponent implements OnInit {
   }
 
   saveItem() {
-    if (this.item.id != null && this.item.id > 0) {
-      this.itemService.update(this.item).subscribe(() => {
-        this.resetItem();
-        this.getItems();
-
-        this.itemService.showMessage('Item alterado com sucesso!');
-      });
+    if (this.item.name == null || this.item.name.trim().length == 0) {
+      this.showMessage('O nome do item é obrigatório!');
     } else {
-      this.itemService.create(this.item).subscribe(() => {
-        this.resetItem();
-        this.getItems();
-
-        this.itemService.showMessage('Item cadastrado com sucesso!');
-      });
+      if (this.item.id != null && this.item.id > 0) {
+        this.itemService.update(this.item).subscribe(() => {
+          this.resetItem();
+          this.getItems();
+  
+          this.showMessage('Item alterado com sucesso!');
+        });
+      } else {
+        this.itemService.create(this.item).subscribe(() => {
+          this.resetItem();
+          this.getItems();
+  
+          this.showMessage('Item cadastrado com sucesso!');
+        });
+      }
     }
   }
 
@@ -69,7 +74,7 @@ export class ItemsCrudComponent implements OnInit {
   deleteItem(itemId: Number) {
     this.itemService.delete(itemId).subscribe(() => {
       this.getItems();
-      this.itemService.showMessage('Item deleetado com sucesso!');
+      this.showMessage('Item deleetado com sucesso!');
     });
   }
 
@@ -92,5 +97,13 @@ export class ItemsCrudComponent implements OnInit {
     } else {
       this.items = [...this.dataSource];
     }
+  }
+
+  showMessage(msg: string): void {
+    this.snackBar.open(msg, '', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
   }
 }
